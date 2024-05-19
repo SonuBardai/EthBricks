@@ -1,5 +1,6 @@
-const { expect } = require("chai");
-const { ethers } = require("hardhat");
+import pkg from "hardhat";
+const { ethers } = pkg;
+import { expect } from "chai";
 
 const tokens = (n) => {
   return ethers.utils.parseUnits(n.toString(), "ether");
