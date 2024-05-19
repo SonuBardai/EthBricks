@@ -14,7 +14,7 @@ const NavBar = () => {
 
       <div className="flex-none">
         <button className="btn btn-outline btn-ghost" onClick={() => navigate("/login")}>
-          Login
+          Connect Wallet
         </button>
       </div>
     </div>
