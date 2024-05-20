@@ -7,19 +7,36 @@ const Property = ({ property }: { property: PropertyType }) => {
   return (
     <>
       <dialog id={dialogId} className="modal">
-        <div className="modal-box border border-white relative">
-          <figure>
-            <img src={property.image} alt="Property" />
-          </figure>
-          <h3 className="font-bold text-lg">{property.name}</h3>
-          <p className="py-4">{property.description}</p>
+        <div className="modal-box max-w-[75vw] w-full border border-white relative">
           <div className="modal-action">
             <form method="dialog">
               <button className="btn absolute top-0 right-0">&#10005;</button>
             </form>
           </div>
+
+          <div className="flex justify-evenly">
+            <img src={property.image} alt="Property" className="w-1/2" />
+            <div>
+              <h3 className="font-bold text-lg">{property.name}</h3>
+              <p className="py-4">{property.description}</p>
+              <table className="table">
+                <tbody>
+                  {property.attributes.map((attribute) => (
+                    <tr key={attribute.trait_type}>
+                      <td>{attribute.trait_type}</td>
+                      <td>{attribute.value}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div className="flex flex-col items-center my-4">
+            <button className="btn btn-secondary px-12">Buy</button>
+          </div>
         </div>
       </dialog>
+
       <div className="card w-96 bg-base-200 shadow-xl">
         <figure>
           <img src={property.image} alt="Property" />
@@ -77,7 +94,7 @@ const Dashboard = ({ account, properties }) => {
   );
 };
 
-const Home = ({ account, connectHandler, properties }) => {
+const Home = ({ account, connectHandler, properties, provider, escrow }) => {
   return account ? (
     <Dashboard account={account} properties={properties} />
   ) : (

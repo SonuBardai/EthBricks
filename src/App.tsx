@@ -61,7 +61,7 @@ const App = () => {
       <ErrorBoundary FallbackComponent={Error}>
         <NavBar account={account} connectHandler={connectHandler} />
         <Routes>
-          <Route path="/" element={<Home account={account} connectHandler={connectHandler} properties={properties} />} />
+          <Route path="/" element={<Home account={account} connectHandler={connectHandler} properties={properties} provider={provider} escrow={escrow} />} />
           <Route path="/login" element={<Login />} />
           <Route path="*" element={<Page404 />} />
         </Routes>
