@@ -13,6 +13,11 @@ const tokens = (n) => {
 
 async function main() {
   const [buyer, seller, inspector, lender] = await ethers.getSigners();
+  console.log("BUYER: ", buyer.address);
+  console.log("SELLER: ", seller.address);
+  console.log("INSPECTOR: ", inspector.address);
+  console.log("LENDER: ", lender.address);
+
   // deploy the real estate and escrow contracts
   const RealEstate = await ethers.getContractFactory("RealEstate");
   const realEstate = await RealEstate.deploy();
@@ -45,8 +50,7 @@ async function main() {
   console.log("Properties listed on Escrow");
 }
 
-// We recommend this pattern to be able to use async/await everywhere
-// and properly handle errors.
+// using this pattern to be able to use async/await everywhere and properly handle errors.
 main().catch((error) => {
   console.error(error);
   process.exitCode = 1;

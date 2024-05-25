@@ -18,7 +18,7 @@ const App = () => {
   const { theme } = useTheme();
 
   const [properties, setProperties] = useState<Property[]>([]);
-  const [account, setAccount] = useState();
+  const [account, setAccount] = useState<string>();
   const [provider, setProvider] = useState<ethers.providers.Web3Provider>();
   const [escrow, setEscrow] = useState<ethers.Contract>();
 
@@ -44,15 +44,26 @@ const App = () => {
 
     const escrow = new ethers.Contract(config[network.chainId].escrow.address, Escrow, provider);
     setEscrow(escrow);
-
-    window.ethereum.on("accountsChange", async () => {
-      connectHandler();
-    });
   };
 
   useEffect(() => {
     if (window.ethereum) {
       loadBlockchainData();
+    }
+  }, []);
+
+  useEffect(() => {
+    const ethereum = window.ethereum;
+    if (ethereum && ethereum.on && ethereum.removeListener) {
+      const handleAccountsChanged = (accounts: string[]) => {
+        if (accounts.length > 0) {
+          setAccount(accounts[0]);
+        }
+      };
+
+      ethereum.on("accountsChanged", handleAccountsChanged);
+
+      return () => ethereum.removeListener("accountsChanged", handleAccountsChanged);
     }
   }, []);
 
